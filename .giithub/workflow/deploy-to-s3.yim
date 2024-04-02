@@ -8,7 +8,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4  
 
-    #--> ATTENTION NE TOUCHEZ PAS A CE STEP
+    #--> ATTENTION : NE TOUCHEZ PAS A CE STEP
     - name: Insert commit ID into HTML
       run: |
         sed -i "s/data-commit-id=\".*\"/data-commit-id=\"${{ github.sha }}\"/g" index.html
