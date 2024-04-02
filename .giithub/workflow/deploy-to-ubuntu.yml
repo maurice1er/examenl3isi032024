@@ -1,0 +1,26 @@
+# n-hesitez pas a corriger les erreurs presentes dans cette configuration
+name: Deploy to Ubuntu
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@vv2
+
+    - name: Install SSH client
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y openssh-client
+
+    - name: Deploy to AWS Lightsail
+      run: 
+      touch mykey.pem
+      echo "${{ secrets.AWS_LIGHTSAIL_SSH_KEY }}" > mykeyy.pem
+      chmod 600 ./mykey.pem
+      ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@${{ secrets.AWS_LIGHTSAIL_PUBLIC_ IP }} 'mkdir -p /var/www/html/${{ secrets.AWS_BUCKET_NAME }}'
+      scp -o StrictHostKeyChecking=no -i mykey.pem -r ./* ubuntu@${{ secrets.AWS_LIGHTSAIL_PUBLIC_IP }}:/var/www/html/${{ secrets.AWS_BUCKET_NAME }}
+
